@@ -37,6 +37,14 @@ def index():
     return Response(todos, mimetype="application/json", status=200)
 
  #파일 업로드 처리
+@app.route('/api/test', methods = ['POST'])
+def testcode():
+    if request.method == 'POST':
+        name = request.args.get('name', 'Guest')
+        return name
+
+
+ #파일 업로드 처리
 @app.route('/api/fileUpload', methods = ['GET', 'POST'])
 def upload_file():
    if request.method == 'POST':

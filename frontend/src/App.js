@@ -1,9 +1,14 @@
 import React from 'react';
+import axios from 'axios';
 
 const App = () => {
+  const onClick = () => {
+    axios.post('https://localhost:5000/api/test',{'name': 'Peter'})
+  }
+
   return (
     <div>
-      Hey!
+      <button onClick = {onClick}>test</button>
     </div>
   );
 }
