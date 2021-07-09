@@ -1,7 +1,7 @@
 import datetime
 import os
  
-from flask import Flask, Response, request
+from flask import Flask, render_template, request
 from flask_mongoengine import MongoEngine
 
 app = Flask(__name__)
@@ -21,6 +21,12 @@ class Todo(db.Document):
     done = db.BooleanField(default=False)
     pub_date = db.DateTimeField(default=datetime.datetime.now)
 
+
+#기본 HTML 렌더링
+@app.route('/')
+def render_file():
+   return render_template('index.html')
+
 @app.route("/api")
 def index():
     Todo.objects().delete()
@@ -30,5 +36,14 @@ def index():
     todos = Todo.objects().to_json()
     return Response(todos, mimetype="application/json", status=200)
 
+ #파일 업로드 처리
+@app.route('/api/fileUpload', methods = ['GET', 'POST'])
+def upload_file():
+   if request.method == 'POST':
+      f = request.files['file']
+      return f.filename
+      #저장할 경로 + 파일명
+      #f.save(secure_filename(f.filename))
+   
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
