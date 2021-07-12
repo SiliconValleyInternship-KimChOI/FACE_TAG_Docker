@@ -1,7 +1,7 @@
 # Pull latest official node image
 FROM node:latest
 
-# Expose ports
+# Expose ports, 35729 is port for hot reload page
 EXPOSE 3000
 EXPOSE 35729
 
