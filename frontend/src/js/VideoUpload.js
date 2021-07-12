@@ -72,11 +72,11 @@ function VideoUploadPage() {
         
         const config = {
             headers: { 
-                'origin':'http://localhost:3000',
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data',
             }
         }
         formData.append('file', files[0])
+        console.log(files[0])
         axios.post('http://localhost:5000/fileUpload', formData, config)
         .then((response) => {
             setUploadedurl(URL.createObjectURL(files[0]))
