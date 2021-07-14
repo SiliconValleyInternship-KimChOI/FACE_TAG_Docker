@@ -13,8 +13,6 @@ services:
       - /app/node_modules
     networks:
       - frontend
-    environment:
-      - CHOKIDAR_USEPOLLING=true
 
   mongodb:
     image: mongo
@@ -22,12 +20,16 @@ services:
     restart: unless-stopped
     command: mongod --auth
     environment:
+      MONGO_HOST: "localhost"
+      MONGO_PORT: "27017"
       MONGO_INITDB_ROOT_USERNAME: "admin"
       MONGO_INITDB_ROOT_PASSWORD: "password"
       MONGO_INITDB_DATABASE: webapp
       MONGODB_DATA_DIR: /data/db
     volumes:
       - mongodbdata:/data/db
+    ports:
+      - "27017:27017"
     networks:
       - backend
 
@@ -35,13 +37,16 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    # flask app이 실행되는 port number 5000 바인딩
     command: gunicorn --bind 0.0.0.0:5000 app:app
     ports:
       - "5000:5000"
     environment:
-      MONGODB_HOST: mongodb
-      MONGODB_USERNAME: "apiuser"
-      MONGODB_PASSWORD: "apipassword"
+      MONGODB_HOST: mongodb:27017
+      # MONGODB_USERNAME: "apiuser"
+      # MONGODB_PASSWORD: "apipassword"
+      MONGODB_USERNAME: "admin"
+      MONGODB_PASSWORD: "password"
     volumes:
       - appdata:/var/www/
     depends_on:

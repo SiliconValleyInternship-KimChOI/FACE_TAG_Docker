@@ -1,14 +1,13 @@
-import React from 'react';
-import axios from 'axios';
+import './css/App.css'
+import Main from './js/Main'
+import Result from './js/Result'
+import {Route} from "react-router-dom"
 
-const App = () => {
-  const onClick = () => {
-    axios.post('https://localhost:5000/api/test',{'name': 'Peter'})
-  }
-
+function App() {
   return (
     <div>
-      <button onClick = {onClick}>test</button>
+      <Route path="/" component={Main} exact/>
+      <Route path="/result" component={Result} />
     </div>
   );
 }
