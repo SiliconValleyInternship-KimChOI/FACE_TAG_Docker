@@ -52,6 +52,9 @@ def get_video():
             return redirect(request.url)
         filename = secure_filename(video_file.filename)
         path = os.path.join(Upload_URL, filename)
+        # 해당 경로 파일이 존재하지 않을 경우
+        if not (os.path.exists(Upload_URL)):
+            os.mkdir(Upload_URL)
         video_file.save(path)
         return jsonify({'success': True, 'file': 'Received', 'name': filename})
 
