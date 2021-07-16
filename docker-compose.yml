@@ -13,55 +13,99 @@ services:
       - /app/node_modules
     networks:
       - frontend
-
-  mongodb:
-    image: mongo
-    container_name: mongo
-    restart: unless-stopped
-    command: mongod --auth
-    environment:
-      MONGO_HOST: "localhost"
-      MONGO_PORT: "27017"
-      MONGO_INITDB_ROOT_USERNAME: "admin"
-      MONGO_INITDB_ROOT_PASSWORD: "password"
-      MONGO_INITDB_DATABASE: webapp
-      MONGODB_DATA_DIR: /data/db
-    volumes:
-      - mongodbdata:/data/db
-    ports:
-      - "27017:27017"
-    networks:
-      - backend
-
   api:
     build:
       context: ./backend
       dockerfile: Dockerfile
     # flask app이 실행되는 port number 5000 바인딩
-    command: gunicorn --bind 0.0.0.0:5000 app:app
+    # command: gunicorn --bind 0.0.0.0:5000 --workers 3 app:app
     ports:
       - "5000:5000"
-    environment:
-      MONGODB_HOST: mongodb:27017
-      # MONGODB_USERNAME: "apiuser"
-      # MONGODB_PASSWORD: "apipassword"
-      MONGODB_USERNAME: "admin"
-      MONGODB_PASSWORD: "password"
+    # environment:
+    #   MONGODB_HOST: mongodb:27017
+    #   MONGODB_USERNAME: "apiuser"
+    #   MONGODB_PASSWORD: "apipassword"
+    #   MONGODB_USERNAME: "admin"
+    #   MONGODB_PASSWORD: "password"
     volumes:
-      - appdata:/var/www/
-    depends_on:
-      - mongodb
+      - ./backend:/app
+      # - appdata:/var/www/
+    # depends_on:
+    # - mongodb
+    # - redis
+    # - db
     networks:
       - frontend
       - backend
+  worker:
+    build:
+      context: ./celery-queue
+      dockerfile: Dockerfile
+    depends_on:
+      - redis
+    volumes: ["./celery-queue:/queue"]
+    networks:
+      - backend
+    #   - frontend
+  monitor:
+    build:
+      context: ./celery-queue
+      dockerfile: Dockerfile
+    ports:
+      - "5555:5555"
+    entrypoint: flower
+    command: -A tasks --port=5555 --broker=redis://redis:6379/0
+    depends_on:
+      - redis
+    volumes: ["./celery-queue:/queue"]
+    networks:
+      - backend
+  redis:
+    image: redis
+    networks:
+      - backend
+  # db:
+  #   image: mysql
+  #   container_name: mysql
+  #   restart: always
+  #   ports:
+  #     - "3306:3306"
+  #   environment:
+  #     - MYSQL_USER: "admin"
+  #     - MYSQL_PASSWORD: "admin"
+  #     - MYSQL_ROOT_PASSWORD: "password"
+  #     - MYSQL_DATABASE: "test"
+  #     - MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+  #   volumes:
+  #     - ./db:/docker-entrypoint-initdb.d/
+  #     - ./db/data:/var/lib/mysql
+
+  # mongodb:
+  #   image: mongo
+  #   container_name: mongo
+  #   restart: unless-stopped
+  #   command: mongod --auth
+  #   environment:
+  #     MONGO_HOST: "localhost"
+  #     MONGO_PORT: "27017"
+  #     MONGO_INITDB_ROOT_USERNAME: "admin"
+  #     MONGO_INITDB_ROOT_PASSWORD: "password"
+  #     MONGO_INITDB_DATABASE: webapp
+  #     MONGODB_DATA_DIR: /data/db
+  #   volumes:
+  #     - mongodbdata:/data/db
+  #   ports:
+  #     - "27017:27017"
+  #   networks:
+  #     - backend
 
 networks:
   frontend:
     driver: bridge
   backend:
     driver: bridge
-volumes:
-  mongodbdata:
-    driver: local
-  appdata:
-    driver: local
+# volumes:
+#   mongodbdata:
+#     driver: local
+#   appdata:
+#     driver: local
