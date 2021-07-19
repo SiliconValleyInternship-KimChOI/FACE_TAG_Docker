@@ -1,36 +1,43 @@
 import os
-
-# from flask_mongoengine import MongoEngine
-from flask import Flask, flash, Response, request, jsonify, redirect, url_for
+from flask import Flask, flash,  request, jsonify, redirect, url_for
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from worker import celery
 import celery.states as states
-# import pymysql
+import mysql.connector
 
 Upload_URL = "./video"
 # Flask 인스턴스 생성
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = Upload_URL
 CORS(app)
-# CORS(app, origins="http://localhost:3000", supports_credentials=True)
 
-# mongodb 연동 방법
-# app.config['MONGODB_SETTINGS'] = {
-#     'host': os.environ['MONGODB_HOST'],
-#     'port': 27017,
-#     'username': os.environ['MONGODB_USERNAME'],
-#     'password': os.environ['MONGODB_PASSWORD'],
-#     'db': 'webapp',
-#     'authentication_source': 'admin'
-# }
-# app.config['MONGO_AUTH_SOURCE'] = 'admin'
-# db = MongoEngine()
-# db.init_app(app)
 
-# db = pymysql.connect(host='aws_public_ip', port=3306, user='root',
-#                      passwd='password', db='test', charset='utf8')
-# cursor = db.cursor()
+def getMysqlConnection():
+    config = {
+        'user': 'tester',
+        'host': 'db',
+        'port': '3306',
+        'password': 'test',
+        'database': 'test',
+        'auth_plugin': 'mysql_native_password'  # default는 sha256으로 오류 발생
+    }
+    return mysql.connector.connect(**config)
+
+
+@app.route('/test', methods=['GET'])
+def get_test():
+    db = getMysqlConnection()
+    try:
+        sql = "SELECT * FROM testtb"
+        cur = db.cursor()
+        cur.execute(sql)
+        output_json = cur.fetchall()
+        return jsonify(output_json)
+    except Exception as e:
+        print("Error in SQL: /n", e)
+    finally:
+        db.close()
 
 
 @app.route('/add/<int:param1>/<int:param2>')
@@ -70,28 +77,6 @@ def get_video():
         return jsonify({'success': True, 'file': 'Received', 'name': filename})
     if request.method == 'GET':
         return "flask test"
-
-
-# mongodb를 활용한 예제
-# class Todo(db.Document):
-#     title = db.StringField(max_length=60)
-#     text = db.StringField()
-#     done = db.BooleanField(default=False)
-
-#     def to_json(self):
-#         return {"title": self.title,
-#                 "email": self.text,
-#                 "done": self.done}
-
-
-# @app.route("/api", methods={'GET'})
-# def index():
-#     Todo.objects().delete()
-#     Todo(title="Simple todo A", text="12345678910").save()
-#     Todo(title="Simple todo B", text="12345678910").save()
-#     Todo.objects(title__contains="B").update(set__text="Hello world")
-#     todos = Todo.objects().to_json()
-#     return Response(todos, mimetype="application/json", status=200)
 
 
 # debug=true를 통해 무엇이 오류인지 알려준다.
