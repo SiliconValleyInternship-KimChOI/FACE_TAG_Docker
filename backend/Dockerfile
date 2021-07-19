@@ -1,5 +1,3 @@
-# Create our image based on Python 3.8
-# FROM python:3.8
 FROM python:3.6-alpine
 
 # link to redis
@@ -15,17 +13,16 @@ ENV DEBUG true
 EXPOSE 5000
 
 # Tell Python to not generate .pyc
-# ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONDONTWRITEBYTECODE 1
 
 # Turn off buffering
-# ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED 1
 
 # Install requirements using pip
 ADD requirements.txt .
 
 # RUN python -m pip install -r requirements.txt
 RUN pip install -r requirements.txt
-
 RUN pip install gunicorn
 
 # Set working directory and addour Flask API files
