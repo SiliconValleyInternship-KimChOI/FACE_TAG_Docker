@@ -55,8 +55,8 @@ services:
   db:
     container_name: mysql
     build:
-    context: ./db
-    dockerfile: Dockerfile
+      context: ./db
+      dockerfile: Dockerfile
     ports:
       - "32000:3306"
     volumes:
