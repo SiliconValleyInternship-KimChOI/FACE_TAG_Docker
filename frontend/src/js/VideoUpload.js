@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-// 깔아야 할 것? 확인해보기!!
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import {Form} from 'antd';

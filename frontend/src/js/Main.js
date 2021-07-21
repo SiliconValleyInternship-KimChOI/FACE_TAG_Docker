@@ -5,7 +5,6 @@ import {Link} from "react-router-dom";
 import VideoUpload from './VideoUpload';
 import React from 'react';
 
-// 반응형 웹 페이지를 위해 뷰포트를 제어하는 코드
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 
@@ -54,28 +53,5 @@ const Main = () => {
     )
 }
 
-// export default props => {
-//   const Col = styled.div`
-//     float: left;
-//     width: ${props => (props.span ? (props.span / 12) * 100 : "8.33")}%;
-//     padding: 1rem;
-//   `;
-
-//   return <Col span={props.span}>{props.children}</Col>;
-// };
-
-//Row 컴포넌트
-// export default props => {
-//   const Row = styled.div`
-//     &::after {
-//       content: "";
-//       clear: both;
-//       display: table;
-//     }
-//   `;
-//   return <Row>{props.children}</Row>;
-// };
-
 export default Main;
-//Column 컴포넌트
 
