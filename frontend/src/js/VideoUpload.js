@@ -96,7 +96,7 @@ function VideoUploadPage() {
         }
         formData.append('file', files[0])
         console.log(files[0])
-        axios.post('http://localhost:5000/fileUpload', formData, config)
+        axios.post('fileUpload', formData, config)
         .then((response) => {
             setUploadedurl(URL.createObjectURL(files[0]))
             setLoadState(true)
