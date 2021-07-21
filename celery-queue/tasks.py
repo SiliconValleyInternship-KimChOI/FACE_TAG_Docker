@@ -16,3 +16,8 @@ celery = Celery('tasks', broker=CELERY_BROKER_URL,
 def add(x: int, y: int) -> int:
     time.sleep(5)
     return x + y
+
+
+# @celery.task(name='video')
+# def ad():
+#     return

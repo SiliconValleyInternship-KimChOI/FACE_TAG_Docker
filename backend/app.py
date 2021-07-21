@@ -14,10 +14,10 @@ CORS(app)
 
 def getMysqlConnection():
     config = {
-        'user': 'tester',
+        'user': 'root',
         'host': 'db',
         'port': '3306',
-        'password': 'test',
+        'password': 'password',
         'database': 'test',
         'auth_plugin': 'mysql_native_password'
     }
@@ -28,7 +28,7 @@ def getMysqlConnection():
 def get_test():
     db = getMysqlConnection()
     try:
-        sql = "SELECT * FROM testtb"
+        sql = "select id,name from Characters"
         cur = db.cursor()
         cur.execute(sql)
         output_json = cur.fetchall()

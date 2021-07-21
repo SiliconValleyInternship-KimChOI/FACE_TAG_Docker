@@ -57,10 +57,17 @@ services:
     build:
       context: ./db
       dockerfile: Dockerfile
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    environment:
+      # MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+      MYSQL_ROOT_PASSWORD: password
+      # MYSQL_DATABASE: test
+      MYSQL_USER: tester
     ports:
       - "32000:3306"
     volumes:
-      - ./db:/docker-entrypoint-initdb.d/:ro
+      # - ./db:/docker-entrypoint-initdb.d/:ro
+      - ./db/mysql-init-file:/docker-entrypoint-initdb.d/:ro # init.sql로 db 초기화(ro는 읽기전용)
       - ./db/data:/var/lib/mysql
     networks:
       - backend
