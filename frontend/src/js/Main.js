@@ -3,6 +3,7 @@ import '../css/index.css';
 import Logo from '../css/GAGA2.png';
 import {Link} from "react-router-dom";
 import VideoUpload from './VideoUpload';
+import React from 'react';
 
 // 반응형 웹 페이지를 위해 뷰포트를 제어하는 코드
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
