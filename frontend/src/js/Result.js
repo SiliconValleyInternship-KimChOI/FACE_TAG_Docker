@@ -1,7 +1,8 @@
-import styled from "styled-components";
-import '../css/index.css';
-import Logo from '../css/GAGA2.png';
-import {Link} from "react-router-dom";
+import React from 'react'
+import styled from "styled-components"
+import '../css/index.css'
+import Logo from '../css/GAGA2.png'
+import {Link} from "react-router-dom"
 import ReactPlayer from 'react-player'
 
 const Container = styled.div`
