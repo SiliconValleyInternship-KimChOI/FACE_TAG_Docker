@@ -2,8 +2,8 @@ import styled from "styled-components";
 import '../css/index.css';
 import Logo from '../css/GAGA2.png';
 import {Link} from "react-router-dom";
-import VideoUpload from './VideoUpload';
 import React from 'react';
+import VideoUpload from './VideoUpload';
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
