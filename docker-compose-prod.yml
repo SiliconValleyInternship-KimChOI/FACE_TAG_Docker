@@ -1,60 +1,74 @@
-version: '3.7'
+version: "3.7"
 
 services:
-
-    client:
-        build:
-            context: ./frontend
-            dockerfile: Dockerfile-prod
-        ports:
-            - "3000:80"
-        volumes: 
-            - ./frontend:/app
-            - /app/node_modules
-        networks:
-            - frontend
-
-    mongodb:
-        image: mongo
-        container_name: mongo
-        restart: unless-stopped
-        command: mongod --auth
-        environment:
-            MONGO_INITDB_ROOT_USERNAME: "admin"
-            MONGO_INITDB_ROOT_PASSWORD: "password"
-            MONGO_INITDB_DATABASE: webapp
-            MONGODB_DATA_DIR: /data/db
-        volumes:
-        - mongodbdata:/data/db
-        networks:
-        - backend
-
-    api:
-        build: 
-            context: ./backend
-            dockerfile: Dockerfile
-        command: gunicorn --bind 0.0.0.0:5000 app:app
-        ports:
-            - "5000:5000"
-        environment:
-            MONGODB_HOST: mongodb
-            MONGODB_USERNAME: "apiuser"
-            MONGODB_PASSWORD: "apipassword"
-        volumes:
-            - appdata:/var/www/
-        depends_on: 
-            - mongodb
-        networks:
-            - frontend
-            - backend
+  client:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile-prod
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - frontend
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - appdata:/var/www/
+    networks:
+      - frontend
+      - backend
+  worker:
+    build:
+      context: ./celery-queue
+      dockerfile: Dockerfile
+    depends_on:
+      - redis
+    volumes: ["./celery-queue:/queue"]
+    networks:
+      - backend
+  monitor:
+    build:
+      context: ./celery-queue
+      dockerfile: Dockerfile
+    ports:
+      - "5555:5555"
+    entrypoint: flower
+    command: -A tasks --port=5555 --broker=redis://redis:6379/0
+    depends_on:
+      - redis
+    volumes: ["./celery-queue:/queue"]
+    networks:
+      - backend
+  redis:
+    image: redis
+    networks:
+      - backend
+  db:
+    container_name: mysql
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    ports:
+      - "32000:3306"
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/:ro
+      - ./db/data:/var/lib/mysql
+    networks:
+      - backend
 
 networks:
-    frontend:
-        driver: bridge
-    backend:
-        driver: bridge
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
 volumes:
-    mongodbdata:
-        driver: local
-    appdata:
-        driver: local
+  mongodbdata:
+    driver: local
+  appdata:
+    driver: local
