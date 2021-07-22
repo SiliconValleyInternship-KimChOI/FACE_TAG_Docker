@@ -11,7 +11,7 @@ CELERY_RESULT_BACKEND = os.environ.get(
 celery = Celery("tasks", broker=CELERY_BROKER_URL, backend=CELERY_RESULT_BACKEND)
 
 
-@celery.task
+@celery.task(name="get_db")
 def get_db(path):
     detect = Detect_class(path)
     source = detect.get_source()
@@ -24,7 +24,7 @@ def get_db(path):
     print("\ndb: ", db)
 
 
-@celery.task
+@celery.task(name="processing")
 def processing(url):
     # 영상처리
     example = (

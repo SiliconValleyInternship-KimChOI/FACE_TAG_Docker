@@ -1,4 +1,3 @@
-from posixpath import dirname
 from flask import (
     Flask,
     flash,
@@ -12,16 +11,13 @@ from flask import (
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
 from worker import celery
-import celery.states as states
+
+# import celery.states as states
 import mysql.connector
 
-import sys, os
+import os
 
 # 다른 폴더의 *.py을 참조하기 위한 절대경로 설정
-sys.path.append(
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "../../celery-queue"))
-)
-from tasks import celery, processing, get_db
 from connection import s3_connection, BUCKET_NAME
 import boto3
 from time import strftime, gmtime
@@ -67,7 +63,7 @@ def get_video():
         video_file.save(path)
 
     # 영상 처리
-    video = processing.delay("input_video/abc.mp4")
+    video = celery.send_task("processing", args=["input_video/abc.mp4"], kwargs={}).delay()
     # 등장인물 타임라인
     if video.ready() == True:
         with open("list/appear_list.txt", "r", encoding="utf-8") as f:
@@ -135,9 +131,9 @@ def get_Character():
         return jsonify(result)
 
 
-# @app.route('/add/<int:param1>/<int:param2>')
+# @app.route("/add/<int:param1>/<int:param2>")
 # def add(param1: int, param2: int) -> str:
-#     task = celery.send_task('tasks.add', args=[param1, param2], kwargs={})
+#     task = celery.send_task("tasks.add", args=[param1, param2], kwargs={})
 #     response = f"<a href='{url_for('check_task', task_id=task.id, external=True)}'>check status of {task.id} </a>"
 #     return response
 
