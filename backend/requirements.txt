@@ -1,7 +1,7 @@
 Flask==1.0.2
 # gunicorn==20.0.4
 flask-cors==3.0.10
-flask-mongoengine
+# flask-mongoengine
 celery==4.2.1
 redis==2.10.6
 kombu==4.2.0
@@ -15,3 +15,4 @@ kombu==4.2.0
 # vine==1.1.4
 # Werkzeug==0.15.3
 mysql-connector==2.2.9
+boto3==1.18.4

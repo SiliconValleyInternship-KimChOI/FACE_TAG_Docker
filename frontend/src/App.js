@@ -1,6 +1,6 @@
 import './css/App.css'
-import Main from './js/Main'
-import Result from './js/Result'
+import Main from './page/Main'
+import Result from './page/Result'
 import {Route} from "react-router-dom"
 
 function App() {
