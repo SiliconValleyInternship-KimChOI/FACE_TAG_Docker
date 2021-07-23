@@ -1,21 +1,24 @@
 # 🏷️#FACE_TAG
+
+_**#FACE_TAG** is a site that tags the characters in the video and lists the appearance times of the characters._
+
+If you register the "Harry Potter" video on the website, you can check the video results of tagging Harry, Ron, and Hermione, the main cast of Harry Potter, and the time the person appeared.
+
 _**#FACE_TAG**는 영상 속 인물들을 태깅하고 인물들의 등장 시간을 리스트로 정리해주는 사이트입니다._
 
 '해리포터' 영상을 등록하면 해리포터의 주요 출연진인 'Harry', 'Ron', 'Hermione'을 태깅한 영상 결과와 해당 사람이 등장한 시간을 확인할 수 있습니다.
 
 
-
 <시연 GIF 넣을 예정>
 
 
----------
-
-## ✏Application Feature
+<br/>
 
 
-
-## ✏Service Flow
-
+## ✏Features (PoC)
+    1) Video of person tagging result is provided (인물 태깅 결과 영상 제공)
+    2) Output time of person appearance (인물 등장 시간 출력)
+<br/>
 
 
 ## ✏Tech Stack
@@ -30,15 +33,51 @@ _**#FACE_TAG**는 영상 속 인물들을 태깅하고 인물들의 등장 시�
     - Database : MySQL
     - etc : Docker / VScode / Redis 3.5.3 / Git/GitHub / AWS / Amozon S3
 
+## Frontend
+    React
+    
 
 
+<br/>
 
 ## ✏System Archetecture
+<이미지 첨부>
 <img src = "">
 
 
+<br/>
+
+## ✏Initialization
+0. clone the repository
+
+### 1. Backend
+1.1 blablabla
+
+        ~~~
+    
+1.2 blablabla
+
+        ~~~
+    
+1.3 blablabla
+
+        ~~~
+
+### 2. Frontend
+2.1 blablabla
+
+    ~~~
+    
+2.2 blablabla
+
+    ~~~
+    
+2.3 blablabla
+
+    ~~~
 
 
+<br/>
 
 ## ✏Team Members
 😎김서영(팀장) - https://github.com/ksy990628
