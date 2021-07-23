@@ -1,4 +1,5 @@
-FROM python:3.6-alpine
+# FROM python:3.6-alpine
+FROM python:3.7
 
 # link to redis
 ENV CELERY_BROKER_URL redis://redis:6379/0
