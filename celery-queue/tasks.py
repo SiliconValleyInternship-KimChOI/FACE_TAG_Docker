@@ -8,7 +8,7 @@ CELERY_RESULT_BACKEND = os.environ.get(
 )
 
 celery = Celery("tasks", broker=CELERY_BROKER_URL, backend=CELERY_RESULT_BACKEND)
-celery.conf.timezone = "Asia/Seoul"
+# celery.conf.timezone = "Asia/Seoul"
 
 
 @celery.task(name="processing")

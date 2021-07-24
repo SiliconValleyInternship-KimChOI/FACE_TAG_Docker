@@ -1,7 +1,7 @@
 Flask==1.0.2
 flask-cors==3.0.10
 # flask-mongoengine
-flower==1.0.0
+celery-flower==1.0.1
 celery==5.1.2
 redis==3.5.3
 kombu==5.1.0
@@ -17,4 +17,4 @@ vine==5.0.0
 mysql-connector==2.2.9
 boto3==1.18.4
 moviepy==1.0.3
-imageio-ffmpeg==0.4.4
+# imageio-ffmpeg==0.4.4

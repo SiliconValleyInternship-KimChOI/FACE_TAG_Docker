@@ -26,8 +26,14 @@ ADD requirements.txt .
 RUN pip install -r requirements.txt
 RUN pip install gunicorn
 
+# RUN apt-get update
+# RUN apt-get -y install ffmpeg
+
 # Set working directory and addour Flask API files
 WORKDIR /app
 ADD . /app
+
+
+
 
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "3", "app:app"]

@@ -29,7 +29,7 @@ from moviepy.editor import *
 
 
 # s3 connection
-from connection import s3_connection, BUCKET_NAME
+from connection import s3_connection, BUCKET_NAME, BUCKET_URL
 import boto3
 
 Upload_URL = "./input_video/"
@@ -56,12 +56,36 @@ def getMysqlConnection():
     return mysql.connector.connect(**config)
 
 
+@app.route("/fileUpload", methods=["POST"])
+def get_video():
+    if request.method == "POST":
+        # 파일이 존재하지 않을 경우
+        if "file" not in request.files:
+            flash("no file part")
+            return redirect(request.rul)
+        video_file = request.files["file"]
+        # 파일 내용이 없을 경우
+        if video_file == "":
+            flash("No selected file")
+            return redirect(request.url)
+        # 파일 안정성 확인
+        filename = secure_filename(video_file.filename)
+        path = os.path.join(Upload_URL, filename)
+        # input_video 폴더가 없을 경우 폴더 생성
+        if not (os.path.exists(Upload_URL)):
+            os.mkdir(Upload_URL)
+        # input_video 폴더에 저장
+        video_file.save(path)
+        # 소리 합성
+        return jsonify({"success": True, "file": "Received", "name": filename})
+
+
 # DB저장
 def insertTimeline(timeline):
     # Timeline table 전에 저장된 정보 삭제
     db = getMysqlConnection()
     cursor = db.cursor()
-    sql = """TRUNCATE TABLE timeline;"""
+    sql = """TRUNCATE TABLE Timeline;"""
     cursor.execute(sql)
     key = timeline.keys()
     for i in key:
@@ -86,34 +110,6 @@ def insertTimeline(timeline):
     return "Timeline update"
 
 
-@app.route("/fileUpload", methods=["POST"])
-def get_video():
-    if request.method == "POST":
-        # 파일이 존재하지 않을 경우
-        if "file" not in request.files:
-            flash("no file part")
-            return redirect(request.rul)
-        video_file = request.files["file"]
-        # 파일 내용이 없을 경우
-        if video_file == "":
-            flash("No selected file")
-            return redirect(request.url)
-        # 파일 안정성 확인
-        filename = secure_filename(video_file.filename)
-        path = os.path.join(Upload_URL, filename)
-        # input_video 폴더가 없을 경우 폴더 생성
-        if not (os.path.exists(Upload_URL)):
-            os.mkdir(Upload_URL)
-        # input_video 폴더에 저장
-        video_file.save(path)
-        # 소리 합성
-        global audioclip
-        # 오디오 입력 받기
-        audioclip = VideoFileClip("./input_video/" + filename).audio
-
-        return jsonify({"success": True, "file": "Received", "name": filename})
-
-
 @app.route("/fileDown", methods=["POST"])
 def post_video():
     if request.method == "POST":
@@ -121,42 +117,45 @@ def post_video():
         file_list = os.listdir(app.config["UPLOAD_FOLDER"])
         filename = "".join(file_list)
         # 영상 처리
+        audioclip = VideoFileClip("./input_video/" + filename).audio
         video = celery.send_task(
             "processing", args=[app.config["UPLOAD_FOLDER"] + filename]
         )
+
+        # 등장인물 타임라인 DB 저장
         global timeline
         data = str(video.get())
         timeline = eval(data)
-        print(timeline)
         # db 저장
         insertTimeline(timeline)
 
         # 소리 합치기
-        videoclip = VideoFileClip(video_path + "output/" + filename)
-        videoclip.audio = audioclip  # 아웃풋 동영상에 오디오 씌우기
-        videoclip.write_videofile(video_path + "output/" + filename)  # 아웃풋 동영상 덮어쓰기
-
+        videoclip = VideoFileClip("./output_video/output/" + filename)
+        videoclip.audio = audioclip
+        videoclip.write_videofile(video_path + filename)
         # S3 버킷에 영상 저장
         s3 = s3_connection()
-        s3.upload_file(video_path + filename, BUCKET_NAME, filename)
+        if not (os.path.exists(video_path)):
+            os.mkdir(video_path)
+        s3.upload_file(video_path + filename, BUCKET_NAME, "{BUCKET_URL}/{filename}")
         # 영상 url
-        url = "https://{BUCKET_NAME}.s3.ap-northeast-2.amazonaws.com/{filename}"
+        url = "https://{BUCKET_URL}/{filename}"
         return jsonify(url)
 
 
-@app.route("/getCharacter", methods=["POST"])
-def get_Character():
-    db = getMysqlConnection()
-    if request.method == "POST":
-        cursor = db.cursor()
-        # timeline 가져오기
-        sql = """
-		SELECT name,img,start,end from Characters 
-		RIGHT JOIN Timeline ON Characters.id = Timeline.cid
-		ORDER BY name, start;"""
-        cursor.execute(sql)
-        result = cursor.fetchall()
-        return jsonify(result)
+# @app.route("/getCharacter", methods=["POST"])
+# def get_Character():
+#     db = getMysqlConnection()
+#     if request.method == "POST":
+#         cursor = db.cursor()
+#         # timeline 가져오기
+#         sql = """
+# 		SELECT name,img,start,end from Characters
+# 		RIGHT JOIN Timeline ON Characters.id = Timeline.cid
+# 		ORDER BY name, start;"""
+#         cursor.execute(sql)
+#         result = cursor.fetchall()
+#         return jsonify(result)
 
 
 if __name__ == "__main__":
