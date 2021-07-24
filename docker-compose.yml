@@ -21,6 +21,8 @@ services:
       - "5000:5000"
     volumes:
       - ./backend:/app
+      - inputvideo:/app/input_video
+      - outputvideo:/app/output_video
     links:
       - db
     networks:
@@ -33,7 +35,10 @@ services:
     depends_on:
       - redis
     command: celery -A tasks worker --loglevel=info
-    volumes: ["./celery-queue:/queue"]
+    volumes:
+      - ./celery-queue:/queue
+      - inputvideo:/queue/input_video
+      - outputvideo:/queue/output_video
     networks:
       - backend
   monitor:
@@ -82,8 +87,10 @@ networks:
     driver: bridge
   backend:
     driver: bridge
-# volumes:
-#   mongodbdata:
+volumes:
+  inputvideo:
+  outputvideo:
+    # driver: ./backend/input_video:/queue/input_video
 #     driver: local
 #   appdata:
 #     driver: local

@@ -22,9 +22,9 @@ import mysql.connector
 from time import strftime, gmtime
 
 # Sound synthesis
-import imageio_ffmpeg
+# import imageio_ffmpeg
 
-os.environ["IMAGEIO_FFMPEG_EXE"] = "/usr/bin/ffmpeg"
+# os.environ["IMAGEIO_FFMPEG_EXE"] = "/usr/bin/ffmpeg"
 from moviepy.editor import *
 
 

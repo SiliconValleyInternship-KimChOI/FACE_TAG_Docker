@@ -1,9 +1,9 @@
 import boto3
 
-AWS_ACCESS_KEY = "AKIAS2EJK64D2SQHE6HI"
-AWS_SECRET_KEY = "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"
+AWS_ACCESS_KEY = ""
+AWS_SECRET_KEY = ""
 REGION = "ap-northeast-2"
-BUCKET_NAME = "dongheon97"
+BUCKET_NAME = ""
 BUCKET_URL = "s3://{BUCKET_NAME}/silicon_valley/"
 
 

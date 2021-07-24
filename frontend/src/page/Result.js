@@ -47,22 +47,18 @@ const Result= (props) => {
 
   useEffect (() => {
     // video
-    axios.post('http://localhost:5000//fileDown', filename).then(response=>{
+    axios.post('http://localhost:5000/fileDown', filename).then(response=>{
     console.log(response.data);
-    setUploadedurl(response.data);
+    // console.log(response.data.url);
+    // console.log(response.data.timeline);
+    setUploadedurl(response.data.url);
     setControlState(true);
-  });
-
-    // character timeline
-    var index = new FormData();
-    axios.post('http://localhost:5000/getCharacter', index)
-      .then(response =>{
-        //console.log(response.data);
-        setData(response.data);
-        setLoading(false);})
-      .catch(error=>{console.log(error);})
-  },[]);
-
+    setData(response.data.timeline);
+    setLoading(false);
+  }).catch(error=>{
+    console.log(error);
+    setLoading(true);
+  });},[]);
   return(
       <Container>
           <Link to = '/'>
