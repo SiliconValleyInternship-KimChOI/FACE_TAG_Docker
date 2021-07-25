@@ -4,7 +4,7 @@ AWS_ACCESS_KEY = ""
 AWS_SECRET_KEY = ""
 REGION = "ap-northeast-2"
 BUCKET_NAME = "gagagaga"
-BUCKET_URL = ""
+BUCKET_URL = "https://" + BUCKET_NAME + ".s3." + REGION + ".amazonaws.com/"
 
 
 def s3_connection():

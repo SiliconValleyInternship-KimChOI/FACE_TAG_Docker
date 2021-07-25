@@ -20,6 +20,8 @@ services:
       - "5000:5000"
     volumes:
       - ./backend:/app
+      - inputvideo:/app/input_video
+      - outputvideo:/app/output_video
     links:
       - db
     networks:
@@ -31,31 +33,25 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - redis
-    volumes: ["./celery-queue:/queue"]
-    networks:
-      - backend
-  monitor:
-    build:
-      context: ./celery-queue
-      dockerfile: Dockerfile
-    ports:
-      - "5555:5555"
-    entrypoint: flower
-    command: -A tasks --port=5555 --broker=redis://redis:6379/0
-    depends_on:
-      - redis
-    volumes: ["./celery-queue:/queue"]
+    command: celery -A tasks worker --loglevel=info -c 4 -P gevent -O fair
+    volumes:
+      - ./celery-queue:/queue
+      - inputvideo:/queue/input_video
+      - outputvideo:/queue/output_video
     networks:
       - backend
   redis:
     image: redis
+    ports:
+      - "6379:6379"
     networks:
       - backend
   db:
     container_name: mysql
-    build:
-      context: ./db
-      dockerfile: Dockerfile
+    image: mysql/mysql-server:latest
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: password
     ports:
       - "32000:3306"
     volumes:
@@ -69,3 +65,6 @@ networks:
     driver: bridge
   backend:
     driver: bridge
+volumes:
+  inputvideo:
+  outputvideo:
