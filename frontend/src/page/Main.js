@@ -6,7 +6,7 @@ import Banner from '../css/banner.png'
 import {Link} from "react-router-dom";
 import VideoUpload from '../component/VideoUpload';
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+/* <meta name="viewport" content="width=device-width, initial-scale=1.0" /> */
 
 const Header = styled.div`
   width:100%;

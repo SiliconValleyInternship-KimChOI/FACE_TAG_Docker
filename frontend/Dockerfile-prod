@@ -5,13 +5,15 @@ FROM node:latest as build
 WORKDIR /app
 ADD . /app
 
+EXPOSE 35729
+
 # Add /app/node_modules/.bin to environment variables
 ENV PATH /app/node_modules/.bin:$PATH
 
 # Install all app dependencies
 COPY package.json /app/
-RUN npm install --production
-RUN npm install react-scripts --production
+RUN npm install
+RUN npm install react-scripts
 
 # Build the app
 RUN npm run build

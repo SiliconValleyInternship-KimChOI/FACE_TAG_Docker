@@ -15,21 +15,17 @@ from flask_cors import CORS
 # celery
 from worker import celery
 
-# import celery.states as states
+# mysql
 import mysql.connector
 
 # Convert sec_to_time
 from time import strftime, gmtime
 
-# Sound synthesis
-# import imageio_ffmpeg
-
-# os.environ["IMAGEIO_FFMPEG_EXE"] = "/usr/bin/ffmpeg"
+# autio handle
 from moviepy.editor import *
 
-
 # s3 connection
-from connection import s3_connection, BUCKET_NAME, REGION, BUCKET_URL
+from connection import s3_connection, BUCKET_NAME, BUCKET_URL
 import boto3
 
 Upload_URL = "./input_video/"
@@ -139,7 +135,7 @@ def post_video():
             os.mkdir(video_path)
         s3.upload_file(video_path + filename, BUCKET_NAME, filename)
         # 영상 url
-        url = "https://" + BUCKET_NAME + ".s3." + REGION + ".amazonaws.com/" + filename
+        url = BUCKET_URL + filename
         db = getMysqlConnection()
         cursor = db.cursor()
         sql = """
@@ -154,35 +150,5 @@ def post_video():
         return jsonify({"url": url, "timeline": result})
 
 
-# @app.route("/getCharacter", methods=["POST"])
-# def get_Character():
-#     db = getMysqlConnection()
-#     if request.method == "POST":
-#         cursor = db.cursor()
-#         # timeline 가져오기
-#         sql = """
-# 		SELECT name,img,start,end from Characters
-# 		RIGHT JOIN Timeline ON Characters.id = Timeline.cid
-# 		ORDER BY name, start;"""
-#         cursor.execute(sql)
-#         result = cursor.fetchall()
-#         return jsonify(result)
-
-
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True, port=5000)
-
-# @app.route("/add/<int:param1>/<int:param2>")
-# def add(param1: int, param2: int) -> str:
-#     task = celery.send_task("tasks.add", args=[param1, param2], kwargs={})
-#     response = f"<a href='{url_for('check_task', task_id=task.id, external=True)}'>check status of {task.id} </a>"
-#     return response
-
-
-# @app.route('/check/<string:task_id>')
-# def check_task(task_id: str) -> str:
-#     res = celery.AsyncResult(task_id)
-#     if res.state == states.PENDING:
-#         return res.state
-#     else:
-#         return str(res.result)
