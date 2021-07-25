@@ -53,9 +53,7 @@ services:
       - backend
   db:
     container_name: mysql
-    build:
-      context: ./db
-      dockerfile: Dockerfile
+    image: mysql/mysql-server:latest
     ports:
       - "32000:3306"
     volumes:
