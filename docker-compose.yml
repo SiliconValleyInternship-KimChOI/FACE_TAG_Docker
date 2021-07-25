@@ -64,9 +64,10 @@ services:
       - backend
   db:
     container_name: mysql
-    build:
-      context: ./db
-      dockerfile: Dockerfile
+    image: mysql/mysql-server:latest
+#build:
+#context: ./db
+#dockerfile: Dockerfile
     command: mysqld --default-authentication-plugin=mysql_native_password
     environment:
       # MYSQL_ALLOW_EMPTY_PASSWORD: "true"

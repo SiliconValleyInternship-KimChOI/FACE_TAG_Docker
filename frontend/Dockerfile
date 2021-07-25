@@ -1,4 +1,4 @@
-# Pull latest official node image
+#Pull latest official node image
 FROM node:latest
 
 # Expose ports, 35729 is port for hot reload page
@@ -14,10 +14,12 @@ ENV PATH /app/node_modules/.bin:$PATH
 # Copy package files and install app dependencies
 COPY package.json /app/
 RUN npm install --production
+#RUN npm install -g
 RUN npm install react-scripts --production
 
 # Add React app to working directory
 ADD . /app
 
 # Start the React app
+RUN chmod 777 node_modules
 CMD ["npm", "start"]

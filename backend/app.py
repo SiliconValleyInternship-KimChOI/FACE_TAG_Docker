@@ -142,10 +142,11 @@ def post_video():
         url = "https://" + BUCKET_NAME + ".s3." + REGION + ".amazonaws.com/" + filename
         db = getMysqlConnection()
         cursor = db.cursor()
-        sql = """
-        SELECT name,img,start,end from characters 
-        RIGHT JOIN timeline ON characters.id = timeline.cid
-        ORDER BY name, start;"""
+        sql =''' 
+			SELECT name,img,start,end from characters 
+			RIGHT JOIN timeline ON characters.id = timeline.cid
+			ORDER BY name, start;
+			'''
         cursor.execute(sql)
         result = cursor.fetchall()
 
@@ -154,19 +155,16 @@ def post_video():
         return jsonify({"url": url, "timeline": result})
 
 
-# @app.route("/getCharacter", methods=["POST"])
-# def get_Character():
-#     db = getMysqlConnection()
-#     if request.method == "POST":
-#         cursor = db.cursor()
-#         # timeline 가져오기
-#         sql = """
-# 		SELECT name,img,start,end from Characters
-# 		RIGHT JOIN Timeline ON Characters.id = Timeline.cid
-# 		ORDER BY name, start;"""
-#         cursor.execute(sql)
-#         result = cursor.fetchall()
-#         return jsonify(result)
+#@app.route("/getCharacter", methods=["POST"])
+#def get_Character():
+#	db = getMysqlConnection()
+#	if request.method == "POST":
+#       cursor = db.cursor()
+#       # timeline 가져오기
+#       sql ="SELECT name,img,start,end from Characters	RIGHT JOIN Timeline ON Characters.id = Timeline.cid ORDER BY name, start;"
+#       cursor.execute(sql)
+#       result = cursor.fetchall()
+#       return jsonify(result)
 
 
 if __name__ == "__main__":
