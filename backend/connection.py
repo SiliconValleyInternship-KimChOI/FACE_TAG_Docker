@@ -3,8 +3,8 @@ import boto3
 AWS_ACCESS_KEY = ""
 AWS_SECRET_KEY = ""
 REGION = "ap-northeast-2"
-BUCKET_NAME = ""
-BUCKET_URL = "s3://{BUCKET_NAME}/silicon_valley/"
+BUCKET_NAME = "gagagaga"
+BUCKET_URL = ""
 
 
 def s3_connection():

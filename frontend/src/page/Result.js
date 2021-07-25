@@ -2,42 +2,63 @@ import React, {useEffect, useState} from 'react'
 import styled from "styled-components"
 import '../css/index.css'
 import axios from 'axios';
-import Logo from '../css/GAGA2.png'
+import Logo from '../css/logo.png'
+import Banner from '../css/banner.png'
 import {Link} from "react-router-dom"
 import ReactPlayer from 'react-player'
 import Timeline from '../component/Timeline';
 import Loading from '../component/Loading';
 
-const Container = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-`;
-
+const Header = styled.div`
+width:100%;
+height:10%;
+`
+const Body = styled.div`
+width: 100%;
+height: 100%;
+background-color: #F5F5F5;
+`
 const Box = styled.div`
-  width:100%;
-  height:50%;
-  border: 0px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+width:100%;
+height:100%;
+margin:0%;
+display:flex;
+align-items:center;
+justify-content:center;
+`
+const VideoBox = styled.div`
+margin-left:10%;
+width:40%;
+height:100%;
+float: left;
+`
+const TimeBox = styled.div`
+margin-left:10%;
+width: 40%;
+height:100%;
+float: left;
 `
 const Text = styled.p`
-  color: black;
-  font-size:2em;
-  margin-top:15%;
-  font-family: 'Do Hyeon';
-`
+color: black;
+padding: 3%;
+font-size:2em;
+text-algin: center;
+font-family: 'Do Hyeon';
+display:flex;
+align-items:center;
+justify-content:center;
+  `
 const Img = styled.img`
-  width: 12%;
-  height: 24%;
-  position: absolute;
-  margin: 1% 45%;
+width: 17%;
+height: 13%;
+position: absolute;
+margin: 1% 40%
 `
-
+const Img2 = styled.img`
+width: 100%;
+height: 20%;
+margin: 9% 0% 3% 0%
+`
 const Result= (props) => {
   const filename = props.location.aboutProps;
   const [loading,setLoading] = useState(true);
@@ -49,8 +70,6 @@ const Result= (props) => {
     // video
     axios.post('http://localhost:5000/fileDown', filename).then(response=>{
     console.log(response.data);
-    // console.log(response.data.url);
-    // console.log(response.data.timeline);
     setUploadedurl(response.data.url);
     setControlState(true);
     setData(response.data.timeline);
@@ -60,19 +79,24 @@ const Result= (props) => {
     setLoading(true);
   });},[]);
   return(
-      <Container>
-          <Link to = '/'>
-          <Img src={Logo} alt = 'logo' />
-          </Link>
-          <Box>
-          {loading ? <Text>동영상 인물 태깅 중...</Text>:<Text>동영상 인물 태깅 완료!</Text>}
-          </Box>
-           <Box>
-           {loading ? <Loading/> :<ReactPlayer url={uploadedurl} height='300px' controls={controlState}/>}
-          </Box> 
-          <br/>
-          {loading ? <Loading/> : <Timeline data={data}/>}
-      </Container>
-  )
+    <div>
+    <Header>
+    <Link to = '/'><Img src={Logo} width="30%" height="30%"/></Link>
+    <Img2 src={Banner}/>
+    </Header>
+
+    <Body>
+    {loading ? <Text>동영상 인물 태깅 중...</Text> : <Text>동영상 인물 태깅 완료!</Text>}
+      <Box>
+      {loading ? <Loading/> : 
+      <div>
+        <VideoBox>
+          <ReactPlayer url={uploadedurl} height='50%' width='100%' controls={controlState}/>
+          </VideoBox>
+        <TimeBox><Timeline data={data}/></TimeBox>
+       </div>}
+      </Box>  
+    </Body>         
+  </div>  )
 };
 export default Result;

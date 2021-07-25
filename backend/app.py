@@ -29,7 +29,7 @@ from moviepy.editor import *
 
 
 # s3 connection
-from connection import s3_connection, BUCKET_NAME, BUCKET_URL
+from connection import s3_connection, BUCKET_NAME, REGION, BUCKET_URL
 import boto3
 
 Upload_URL = "./input_video/"
@@ -85,7 +85,7 @@ def insertTimeline(timeline):
     # Timeline table 전에 저장된 정보 삭제
     db = getMysqlConnection()
     cursor = db.cursor()
-    sql = """TRUNCATE TABLE Timeline;"""
+    sql = """TRUNCATE TABLE timeline;"""
     cursor.execute(sql)
     key = timeline.keys()
     for i in key:
@@ -107,7 +107,7 @@ def insertTimeline(timeline):
         cursor.executemany(sql, val)
         db.commit()
         val.clear()
-    return "Timeline update"
+    return "timeline update"
 
 
 @app.route("/fileDown", methods=["POST"])
@@ -121,7 +121,7 @@ def post_video():
         video = celery.send_task(
             "processing", args=[app.config["UPLOAD_FOLDER"] + filename]
         )
-
+        # os.rmdir(app.config["UPLOAD_FOLDER"])
         # 등장인물 타임라인 DB 저장
         global timeline
         data = str(video.get())
@@ -137,10 +137,21 @@ def post_video():
         s3 = s3_connection()
         if not (os.path.exists(video_path)):
             os.mkdir(video_path)
-        s3.upload_file(video_path + filename, BUCKET_NAME, "{BUCKET_URL}/{filename}")
+        s3.upload_file(video_path + filename, BUCKET_NAME, filename)
         # 영상 url
-        url = "https://{BUCKET_URL}/{filename}"
-        return jsonify(url)
+        url = "https://" + BUCKET_NAME + ".s3." + REGION + ".amazonaws.com/" + filename
+        db = getMysqlConnection()
+        cursor = db.cursor()
+        sql = """
+        SELECT name,img,start,end from characters 
+        RIGHT JOIN timeline ON characters.id = timeline.cid
+        ORDER BY name, start;"""
+        cursor.execute(sql)
+        result = cursor.fetchall()
+
+        # os.remove(app.config['UPLOAD_FOLDER']+filename)
+        # shutil.rmtree(video_path+'output')
+        return jsonify({"url": url, "timeline": result})
 
 
 # @app.route("/getCharacter", methods=["POST"])

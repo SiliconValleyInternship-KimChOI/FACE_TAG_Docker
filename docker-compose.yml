@@ -41,21 +41,21 @@ services:
       - outputvideo:/queue/output_video
     networks:
       - backend
-  monitor:
-    build:
-      context: ./celery-queue
-      dockerfile: Dockerfile
-    ports:
-      - "5555:5555"
-    restart: always
-    # command: celery -A tasks worker --loglevel=info
-    command: celery -A tasks --broker=redis://redis:6379/0 flower
-    depends_on:
-      - redis
-      - worker
-    volumes: ["./celery-queue:/queue"]
-    networks:
-      - backend
+  # monitor:
+  #   build:
+  #     context: ./celery-queue
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "5555:5555"
+  #   restart: always
+  #   # command: celery -A tasks worker --loglevel=info
+  #   command: celery -A tasks --broker=redis://redis:6379/0 flower
+  #   depends_on:
+  #     - redis
+  #     - worker
+  #   volumes: ["./celery-queue:/queue"]
+  #   networks:
+  #     - backend
   redis:
     image: redis
     ports:

@@ -98,7 +98,6 @@ const VideoUpload = () => {
             headers: { 'Content-Type': 'multipart/form-data'}
         }
         formData.append('file', files[0])
-        // axios.post('fileUpload', formData, config)
         axios.post('http://localhost:5000/fileUpload', formData, config)
         .then((response) => {
             setLoading(false)
@@ -117,6 +116,7 @@ const VideoUpload = () => {
         {loading ? <Loading/> : <p>{name}</p>}
         <Box>
             <StDropzone
+                accept='video/*'
                 onDrop={onDrop}
                 multiple={false}    // 한번에 파일을 2개 이상 올릴건지
                 maxSize={100000000}    // 최대 사이즈 
@@ -129,7 +129,7 @@ const VideoUpload = () => {
             )}
             </StDropzone>
             <StLink to= {{pathname: llink, aboutProps: {name}}}> 
-                <UploadBt >동영상 업로드</UploadBt>
+                <UploadBt >인물 태깅</UploadBt>
             </StLink>
         </Box>
     </Form> 
