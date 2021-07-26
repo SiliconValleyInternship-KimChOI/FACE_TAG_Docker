@@ -19,7 +19,7 @@ _**#FACE_TAG**는 영상 속 인물들을 태깅하고 인물들의 등장 시�
 <br/>
 
 ## ✏System Archetecture
-![system_architecture (1)](https://user-images.githubusercontent.com/71761610/126921039-4a210e62-1867-4a0a-8daf-5f9b80171b6e.png)
+![system_architecture](https://user-images.githubusercontent.com/71761610/126921369-b250ed63-e270-435c-909e-5730b21ff340.png)
 <br/>
 <br/>
 
