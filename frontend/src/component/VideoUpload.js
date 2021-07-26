@@ -7,82 +7,84 @@ import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import Loading from './Loading'
 
+const Div = styled.div`
+    display:flex;    
+    justify-content: center;
+    align-items: center;
+    @media only screen and (max-width: 1300px) {
+        flex-direction: column;
+        width:100%;
+    }
+`
+const VideoBox = styled.div`
+    border: 3px solid #DCDCDC;
+    background: white;
+    padding:2%;
+    float: flex;
+    justify-content: center;
+    @media only screen and (min-width: 1300px) {
+        width:850px;
+        height:500px;
+        margin:50px 15px 40px 0;
+    }
+    @media only screen and (max-width: 1300px) {   
+        width: 95%;
+        margin:30px 0 0 0;
+    }
+`
+const UploadedVideo = styled(ReactPlayer)`
+    padding-top: 5%;
+    margin: 0 auto;
+    @media only screen and (max-width: 700px) {
+        padding-top: -5%;
+        ${({controls}) => controls ? `
+        width: 90% !important;
+        height: 80% !important;`
+        : `width: 100% !important;
+        height: 200px !important;`} 
+    }
+`
+const BtnBox = styled.div`
+    border: 3px solid #DCDCDC;
+    background: white;
+    padding:2%;
+    float: flex;
+    @media only screen and (min-width: 1300px) {
+        width:400px;
+        height:500px;
+        margin:50px 0 40px 15px;
+    }
+    @media only screen and (max-width: 1300px) {
+        width: 90%;
+        margin: 2% 0 10px 0;
+    }
+`
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-const Botton = styled.button`
-    width: 90%;
-    color: white;
-    font-size: 3rem;
-    margin-top: 20px;
-    @media screen and (max-width: 800px){
-        font-size: 2rem;
-    }
-    @media screen and (max-width: 550px){
-        font-size: 1rem;
-    }
-    @media screen and (max-width: 430px){
-        width: 70%;
-        margin-left: 15%;
-        margin-top: 4%;
-        margin-right: 15%;
-        font-size: 0.8rem;
-    }
-    background-color: black;
-    border: 0rem;
-    border-radius: 1rem;
+const Button = styled.button`
+    width: 300px;
+    height: 60px;
+    font-size: 1em;
+    margin: 0 0 15px 0;
+    border: 3px solid #DCDCDC;
+    border-radius: 15px;
     text-align: center;
-    text-decoration-line: none;
-    font-family: 'Do Hyeon';
-    box-shadow: 0.1rem 0.2rem 0 rgb(0,0,0,0.5);
-    &:hover {
+    font-family: 'NanumSquare', sans-serif;
+    &:hover{
         background: var(--button-hover-bg-color, #404040);
     }
-    &:active {
-        box-shadow: 0rem 0rem 0 rgb(0,0,0,0.5);
-        position: relative;
-        top:2px;
+    @media only screen and (max-width: 500px) {
+        width: 100%;
+        height:50px;
     }
-
 `
-const StReactPlayer = styled(ReactPlayer)`
-    @media screen and (max-width: 800px){
-        width: 80% !important;
-        height: 60% !important;
-    }
-    @media screen and (max-width: 550px){
-        width: 80% !important;
-        height: 60% !important;
-    }
-    @media screen and (max-width: 400px){
-        width: 80% !important;
-        height: 60% !important;
-    }
-    width: 80% !important;
-    height: 60% !important;
-    margin: auto;
+const SelectBtn = styled(Button)`
+    color: white;
+    background-color: #DCDCDC;
+    // text-decoration-line: none;
 `
-
-const SelectBt = styled(Botton)`
-`
-const UploadBt = styled(Botton)`
-    float: right;
-`
-
-const StDropzone = styled(Dropzone)`
-`
-
-const StLink = styled(Link)`
-    width: 100%;
-`
-
-const Box = styled.div`
-    width: 80%;
-    margin: auto;
-    display: flex;
-    @media screen and (max-width: 430px){
-        display: inline;
-    }
+const UploadBtn = styled(Button)`
+    color: #C3C3C3;
+    background-color: white;
 `
 
 const VideoUpload = () => {
@@ -98,7 +100,7 @@ const VideoUpload = () => {
             headers: { 'Content-Type': 'multipart/form-data'}
         }
         formData.append('file', files[0])
-        axios.post('/fileUpload', formData, config)
+        axios.post('http://localhost:5000/fileUpload', formData, config)
         .then((response) => {
             setLoading(false)
             setUploadedurl(URL.createObjectURL(files[0]))
@@ -111,28 +113,30 @@ const VideoUpload = () => {
     }
 
     return (
-    <Form  onSubmit>
-        <StReactPlayer url={uploadedurl} controls={controlState}></StReactPlayer>
-        {loading ? <Loading/> : <p>{name}</p>}
-        <Box>
-            <StDropzone
-                accept='video/*'
-                onDrop={onDrop}
-                multiple={false}    // 한번에 파일을 2개 이상 올릴건지
-                maxSize={100000000}    // 최대 사이즈 
-            >
-            {({getRootProps, getInputProps}) => (
-                <SelectBt {...getRootProps()}>
-                파일 선택
-                <input {...getInputProps()}/>
-                </SelectBt>
-            )}
-            </StDropzone>
-            <StLink to= {{pathname: llink, aboutProps: {name}}}> 
-                <UploadBt >인물 태깅</UploadBt>
-            </StLink>
-        </Box>
-    </Form> 
+        <Div>
+            <VideoBox>
+                <div className="title">Video</div>
+                <UploadedVideo url={uploadedurl} controls={controlState}></UploadedVideo>
+                {loading ? <Loading/> : <p></p>}
+            </VideoBox>
+            <BtnBox>
+                <div className="title">Upload</div>
+                <div className="button">
+                <Form onSubmit>
+                    <Dropzone
+                        accept='video/*'
+                        onDrop={onDrop}
+                        multiple={false}    // 한번에 파일을 2개 이상 올릴건지
+                        maxSize={100000000}    // 최대 사이즈 
+                        >
+                    {({getRootProps, getInputProps}) => (
+                    <SelectBtn {...getRootProps()}>파일 선택<input {...getInputProps()} /></SelectBtn >)}
+                    </Dropzone>
+                <Link to = {{pathname: llink, aboutProps: {name}}}><UploadBtn>인물 태깅</UploadBtn></Link>
+                </Form> 
+                </div>
+            </BtnBox>
+        </Div>    
     )
 }
 
