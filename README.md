@@ -9,17 +9,20 @@ _**#FACE_TAG**는 영상 속 인물들을 태깅하고 인물들의 등장 시�
 '해리포터' 영상을 등록하면 해리포터의 주요 출연진인 'Harry', 'Ron', 'Hermione'을 태깅한 영상 결과와 해당 사람이 등장한 시간을 확인할 수 있습니다.
 
 [시연 GIF 넣을 예정]
+<br/>
+<br/>
+
 
 ## ✏Features (PoC)
     1) Video of person tagging result is provided (인물 태깅 결과 영상 제공)
     2) Output time of person appearance (인물 등장 시간 출력)
 <br/>
 
-
-
 ## ✏System Archetecture
-<img src = "https://user-images.githubusercontent.com/32729389/126892129-c90d9709-e49f-4221-bf66-0785957b5edc.png">
+![system_architecture (1)](https://user-images.githubusercontent.com/71761610/126921039-4a210e62-1867-4a0a-8daf-5f9b80171b6e.png)
 <br/>
+<br/>
+
 
 
 
