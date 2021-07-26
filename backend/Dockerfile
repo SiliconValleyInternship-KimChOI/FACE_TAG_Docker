@@ -34,4 +34,5 @@ RUN apt-get -y install ffmpeg
 WORKDIR /app
 ADD . /app
 
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "3", "app:app"]
+# extend timeout (default -> 600 sec)
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "3", "-t", "600", "app:app"]

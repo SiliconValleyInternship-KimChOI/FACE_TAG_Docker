@@ -19,5 +19,8 @@ RUN npm install react-scripts --production
 # Add React app to working directory
 ADD . /app
 
+# permission
+RUN chmod 777 node_modules
+
 # Start the React app
 CMD ["npm", "start"]
