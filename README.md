@@ -8,10 +8,8 @@ _**#FACE_TAG**는 영상 속 인물들을 태깅하고 인물들의 등장 시�
 
 '해리포터' 영상을 등록하면 해리포터의 주요 출연진인 'Harry', 'Ron', 'Hermione'을 태깅한 영상 결과와 해당 사람이 등장한 시간을 확인할 수 있습니다.
 
-
-<시연 GIF 넣을 예정>
-
-
+[시연 GIF 넣을 예정]
+<br/>
 <br/>
 
 
@@ -20,31 +18,28 @@ _**#FACE_TAG**는 영상 속 인물들을 태깅하고 인물들의 등장 시�
     2) Output time of person appearance (인물 등장 시간 출력)
 <br/>
 
+## ✏System Archetecture
+![system_architecture](https://user-images.githubusercontent.com/71761610/126921427-a83df27c-2e5d-4880-b2e3-92bb974abec3.png)
+<br/>
+<br/>
+
+
+
 
 ## ✏Tech Stack
 | &nbsp;&nbsp;&nbsp;&nbsp;Frontend&nbsp;&nbsp;&nbsp;&nbsp; |      Backend      |         etc          |
 | :----------------------: | :---------------: | :------------------: |
-|     ![REACT](https://img.shields.io/badge/REACT-v1.1.1-blue?style=flat&logo=REACT)     |       ![Flask](https://img.shields.io/badge/Flask-v1.1.1-black?style=flat&logo=Flask)   ![Celery](https://img.shields.io/badge/Celery-v5.1.2-yellowgreen?style=flat&logo=Celery)   ![Python](https://img.shields.io/badge/Python-v3.8.8-yellow?style=flat&logo=Python)   ![YOLOv5](https://img.shields.io/badge/YOLOv5-v1.1.1-9cf?style=flat&logo=YOLOv5)   ![OpenCV](https://img.shields.io/badge/OpenCV-v1.1.1-red?style=flat&logo=OpenCV)   ![MySQL](https://img.shields.io/badge/MySQL-v1.1.1-blue?style=flat&logo=MySQL)     ![Gunicorn](https://img.shields.io/badge/Gunicorn-v1.1.1-brightgreen?style=flat&logo=Gunicorn)     |     ![Docker](https://img.shields.io/badge/Docker-v1.1.1-blue?style=flat&logo=Docker)   ![Nginx](https://img.shields.io/badge/Nginx-v1.1.1-green?style=flat&logo=Nginx)   ![VScode](https://img.shields.io/badge/VScode-v3.5.3-blue?style=flat&logo=VScode)   ![Redis](https://img.shields.io/badge/Redis-v1.1.1-red?style=flat&logo=Redis)   ![Git](https://img.shields.io/badge/Git-v1.1.1-orange?style=flat&logo=Git)   ![GitHub](https://img.shields.io/badge/GitHub-v1.1.1-black?style=flat&logo=GitHub)   ![AWS](https://img.shields.io/badge/AWS-v1.1.1-yellow?style=flat&logo=AWS)     |
+|     ![REACT](https://img.shields.io/badge/REACT-v1.1.1-blue?style=flat&logo=REACT)     |       ![Flask](https://img.shields.io/badge/Flask-v1.1.1-black?style=flat&logo=Flask)   ![Redis](https://img.shields.io/badge/Redis-v1.1.1-red?style=flat&logo=Redis)   ![Celery](https://img.shields.io/badge/Celery-v5.1.2-yellowgreen?style=flat&logo=Celery)   ![Python](https://img.shields.io/badge/Python-v3.8.8-yellow?style=flat&logo=Python)   ![OpenCV](https://img.shields.io/badge/OpenCV-v4.5.3-red?style=flat&logo=OpenCV)   ![YOLOv5](https://img.shields.io/badge/YOLOv5-v1.1.1-9cf?style=flat&logo=YOLOv5)   ![Gunicorn](https://img.shields.io/badge/Gunicorn-v1.1.1-brightgreen?style=flat&logo=Gunicorn)     ![MySQL](https://img.shields.io/badge/MySQL-v1.1.1-blue?style=flat&logo=MySQL)     |     ![Docker](https://img.shields.io/badge/Docker-v1.1.1-blue?style=flat&logo=Docker)   ![Nginx](https://img.shields.io/badge/Nginx-v1.1.1-green?style=flat&logo=Nginx)   ![VScode](https://img.shields.io/badge/VScode-v3.5.3-blue?style=flat&logo=VScode)   ![AWS](https://img.shields.io/badge/AWS-yellow?style=flat&logo=AWS)   ![Git](https://img.shields.io/badge/Git-orange?style=flat&logo=Git)   ![GitHub](https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub)     |
 
     - Frontend : React
+    - Backend : Flask / Redis / Celery / Python / OpenCV
     - Middleware : Gunicorn
-    - Backend : Flask / Nginx / Flask / Celery / Python 3.8.8 / OpenCV
     - AI : YOLO v5
     - Database : MySQL
-    - etc : Docker / VScode / Redis 3.5.3 / Git/GitHub / AWS / Amozon S3
-
-## Frontend
-    React
-    
-
-
+    - etc : Docker / Nginx / VScode / Git&GitHub / AWS / Amozon S3   
 <br/>
 
-## ✏System Archetecture
-<img src = "https://user-images.githubusercontent.com/32729389/126892129-c90d9709-e49f-4221-bf66-0785957b5edc.png">
 
-
-<br/>
 
 ## ✏Initialization
 0. clone the repository
@@ -74,9 +69,9 @@ _**#FACE_TAG**는 영상 속 인물들을 태깅하고 인물들의 등장 시�
 2.3 blablabla
 
     ~~~
-
-
 <br/>
+
+
 
 ## ✏Team Members
 😎김서영(팀장) - https://github.com/ksy990628
