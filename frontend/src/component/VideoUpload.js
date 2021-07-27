@@ -19,16 +19,16 @@ const Div = styled.div`
 const VideoBox = styled.div`
     border: 3px solid #DCDCDC;
     background: white;
-    padding:2%;
+    padding:3%;
     float: flex;
     justify-content: center;
+    height:480px;
     @media only screen and (min-width: 1300px) {
         width:850px;
-        height:500px;
         margin:50px 15px 40px 0;
     }
     @media only screen and (max-width: 1300px) {   
-        width: 95%;
+        width: 90%;
         margin:30px 0 0 0;
     }
 `
@@ -47,15 +47,15 @@ const UploadedVideo = styled(ReactPlayer)`
 const BtnBox = styled.div`
     border: 3px solid #DCDCDC;
     background: white;
-    padding:2%;
+    padding:3%;
     float: flex;
     @media only screen and (min-width: 1300px) {
-        width:400px;
-        height:500px;
+        width:325px;
+        height:480px;
         margin:50px 0 40px 15px;
     }
     @media only screen and (max-width: 1300px) {
-        width: 90%;
+        width: 60%;
         margin: 2% 0 10px 0;
     }
 `
@@ -65,26 +65,29 @@ const Button = styled.button`
     height: 60px;
     font-size: 1em;
     margin: 0 0 15px 0;
-    border: 3px solid #DCDCDC;
     border-radius: 15px;
     text-align: center;
     font-family: 'NanumSquare', sans-serif;
     &:hover{
         background: var(--button-hover-bg-color, #404040);
     }
-    @media only screen and (max-width: 500px) {
+    @media only screen and (max-width: 550px) {
         width: 100%;
         height:50px;
     }
 `
 const SelectBtn = styled(Button)`
-    color: white;
-    background-color: #DCDCDC;
+    color: gray;
+    background: white;
+    border: 3px solid lightgray;
+
     // text-decoration-line: none;
 `
 const UploadBtn = styled(Button)`
-    color: #C3C3C3;
-    background-color: white;
+    color: white;
+    background-color: #D0D0D0;
+    border: 3px solid #D0D0D0;
+
 `
 
 const VideoUpload = () => {
