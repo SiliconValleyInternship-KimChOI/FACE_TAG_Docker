@@ -1,3 +1,4 @@
+import React from 'react';
 import './css/App.css'
 import Main from './page/Main'
 import Result from './page/Result'

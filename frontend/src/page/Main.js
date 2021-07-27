@@ -6,15 +6,17 @@ import Banner from '../css/banner.png'
 import {Link} from "react-router-dom";
 import VideoUpload from '../component/VideoUpload';
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+/* <meta name="viewport" content="width=device-width, initial-scale=1.0" /> */
 
 const Header = styled.div`
-  width:100%;
-  height:10%;
+  height:80px;
+  position: fixed; top:0;left:0;right:0;
+  text-align:center;
+  background:white;
+  padding:5px 0 0 0;
+  border-bottom: 3px solid #DCDCDC;
 `
 const Body = styled.div`
-  width: 100%;
-  height: 90%;
   background-color: #F5F5F5;
 `
 const VideoBox = styled.div`
@@ -24,50 +26,21 @@ const VideoBox = styled.div`
   align-items:center;
   justify-content:center;
 `
-// const Container = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   width: 100%;
-//   height: 100%;
-//   justify-content:center;
-// `
-
-// const Text = styled.div`
-//   color: black;
-//   @media screen and (max-width: 800px){
-//     font-size: 1.5rem;
-//   }
-//   @media screen and (max-width: 550px){
-//     font-size: 1rem;
-//   }
-//   @media screen and (max-width: 420px){
-//       font-size: 0.7rem;
-//   }
-//   font-size: 2rem;
-//   margin: 5%;
-//   text-align: center;
-//   font-family: 'Do Hyeon';
-// `
-
 const Img = styled.img`
-  width: 17%;
-  height: 13%;
-  position: absolute;
-  margin: 1% 40%
+  padding-top:5px;
 `
 const Img2 = styled.img`
   width: 100%;
-  height: 20%;
-  margin: 9% 0% 3% 0%
+  margin: 80px 0% 3% 0%
 `
 
 const Main = () => {
     return(
         <div>
           <Header>
-          <Link to = '/'><Img src={Logo} width="30%" height="30%"/></Link>
-          <Img2 src={Banner}/>
+          <Link to = '/'><Img src={Logo} height="80%"/></Link>
           </Header>
+          <Img2 src={Banner}/>
           <Body>
           <VideoBox><VideoUpload></VideoUpload></VideoBox>
           </Body>
