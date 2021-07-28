@@ -38,10 +38,10 @@ height:480px;
     margin:50px 15px 40px 0;
 }
 @media only screen and (max-width: 1300px) {   
-    width: 95%;
+    width: 90%;
 }
 @media only screen and (max-width: 600px) {   
-    width: 95%;
+    width: 90%;
     height: 300px
 }
 
