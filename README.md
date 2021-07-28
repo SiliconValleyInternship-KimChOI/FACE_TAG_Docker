@@ -76,6 +76,6 @@ Our Team Name : **Kim ChOI** <- Our last name is *Kim + Ch(oi) + O(=Oh) + I(=Lee
 
 👨‍💻DongHeon Lee - https://github.com/Dongheon97
 
-🙎‍♀️SeungMe Lee - https://github.com/minewet
+🙎‍♀️SeungMi Lee - https://github.com/minewet
 
 👱‍♀️Seyeon Choi - https://github.com/barabobBOB
