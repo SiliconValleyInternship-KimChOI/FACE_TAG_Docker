@@ -31,15 +31,18 @@ const VideoBox = styled.div`
         width: 90%;
         margin:30px 0 0 0;
     }
+    @media only screen and (max-width: 500px) {   
+        width: 90%;
+        height:300px;
+        margin:30px 0 0 0;
+    }
 `
 const UploadedVideo = styled(ReactPlayer)`
-    padding-top: 5%;
     margin: 0 auto;
     @media only screen and (max-width: 700px) {
-        padding-top: -5%;
         ${({controls}) => controls ? `
         width: 90% !important;
-        height: 80% !important;`
+        height: 90% !important;`
         : `width: 100% !important;
         height: 200px !important;`} 
     }
@@ -103,8 +106,9 @@ const VideoUpload = () => {
             headers: { 'Content-Type': 'multipart/form-data'}
         }
         formData.append('file', files[0])
-	// axios.post('http://localhost:5000/fileUpload', formData, config)	// local 
-        axios.post('/fileUpload', formData, config)				// for ec2 
+
+        // axios.post('/fileUpload', formData, config)                      // ec2
+        axios.post('http://localhost:5000/fileUpload', formData, config)    // local
         .then((response) => {
             setLoading(false)
             setUploadedurl(URL.createObjectURL(files[0]))
@@ -121,8 +125,23 @@ const VideoUpload = () => {
         <Div>
             <VideoBox>
                 <div className="title">Video</div>
-                <UploadedVideo url={uploadedurl} controls={controlState}></UploadedVideo>
-                {loading ? <Loading/> : <p></p>}
+                <Dropzone
+                 accept='video/*'
+                 onDrop={onDrop}
+                 multiple={false}    // 한번에 파일을 2개 이상 올릴건지
+                 maxSize={100000000}    // 최대 사이즈 
+                 noClick="true"
+                 > 
+                     {({getRootProps, getInputProps}) => (
+                         <section className="zone">
+                         <div {...getRootProps()} className="zone">
+                             <input {...getInputProps()} />
+                             <UploadedVideo className="player" height='90%' width='100%' url={uploadedurl} controls={controlState}></UploadedVideo>
+                         </div>
+                         </section>
+                     )}
+                 </Dropzone>                
+                 {loading ? <Loading/> : <p></p>}
             </VideoBox>
             <BtnBox>
                 <div className="title">Upload</div>
