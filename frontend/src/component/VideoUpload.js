@@ -103,7 +103,8 @@ const VideoUpload = () => {
             headers: { 'Content-Type': 'multipart/form-data'}
         }
         formData.append('file', files[0])
-        axios.post('http://localhost:5000/fileUpload', formData, config)
+        // axios.post('/fileUpload', formData, config)                      // ec2
+        axios.post('http://localhost:5000/fileUpload', formData, config)    // local
         .then((response) => {
             setLoading(false)
             setUploadedurl(URL.createObjectURL(files[0]))

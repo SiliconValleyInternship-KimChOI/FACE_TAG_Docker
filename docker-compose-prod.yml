@@ -5,6 +5,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile-prod
+    tty: true
     ports:
       - "80:80"
     depends_on:
