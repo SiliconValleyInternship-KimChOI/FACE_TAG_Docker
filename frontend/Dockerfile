@@ -13,8 +13,8 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 # Copy package files and install app dependencies
 COPY package.json /app/
-RUN npm install --production
-RUN npm install react-scripts --production
+RUN npm install
+RUN npm install react-scripts
 
 # Add React app to working directory
 ADD . /app

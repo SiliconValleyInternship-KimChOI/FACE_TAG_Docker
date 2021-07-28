@@ -1,11 +1,10 @@
 # Create image based on node image
 FROM node:latest as build
 
+EXPOSE 35729
+
 # Set working directory
 WORKDIR /app
-ADD . /app
-
-EXPOSE 35729
 
 # Add /app/node_modules/.bin to environment variables
 ENV PATH /app/node_modules/.bin:$PATH
@@ -14,6 +13,8 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json /app/
 RUN npm install
 RUN npm install react-scripts
+
+ADD . /app
 
 # Build the app
 RUN npm run build
