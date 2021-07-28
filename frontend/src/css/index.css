@@ -2,6 +2,7 @@
 
 * {
   font-family: "NanumSquare", sans-serif;
+  margin:0px;
 }
 
 .title {
@@ -34,4 +35,3 @@
     height:100%;
     width:100%;
 }
-
