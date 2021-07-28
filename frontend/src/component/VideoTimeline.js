@@ -2,34 +2,105 @@ import React , {useState} from 'react';
 import styled from 'styled-components';
 import ReactPlayer from 'react-player';
 
-const VideoBox = styled.div`
-margin-left:10%;
-width:40%;
-height:100%;
-float: left;
+const Box = styled.div`
+width:90%;
+margin:0 0 5% 0;
+padding:5%;
+border-bottom: 1px solid #DCDCDC;
 `
-const TimeBox = styled.div`
-margin-left:10%;
-width: 40%;
-height:100%;
-float: left;
+const Profile=styled.div`
+display:flex;    
+justify-content: center;
+align-items: center;
 `
+
 const Img = styled.img`
-width: 100px;
-height: 100px;
+width:70px;
+height: 70px;
 border-radius: 50%;
+margin-right: 10px;
 `
+
 const Name = styled.div`
 float:left;
-margin-left:5%;
-text-algin: center;
-font-family: 'Do Hyeon';
+font-size: 16px;
+font-weight: 700;
+weight: 100%;
 `
+const VideoBox = styled.div`
+border: 3px solid #DCDCDC;
+background: white;
+padding:3%;
+float: left;
+height:480px;
+@media only screen and (min-width: 1300px) {
+    width:800px;
+    margin:50px 15px 40px 0;
+}
+@media only screen and (max-width: 1300px) {   
+    width: 95%;
+}
+@media only screen and (max-width: 600px) {   
+    width: 95%;
+    height: 300px
+}
+
+`
+const TimeBox = styled.div`
+border: 3px solid #DCDCDC;
+background: white;
+padding:3%;
+float: left;
+width:325px;
+@media only screen and (min-width: 1300px) {
+    height:480px;
+    margin:50px 0 40px 15px;
+}
+@media only screen and (max-width: 1300px) {
+    width:70%;
+    margin:30px 0 40px 0;
+}
+@media only screen and (max-width: 500px) {
+    width:90%;
+    margin:30px 0 40px 0;
+}
+`
+const Timediv = styled.div`
+width:100%;
+height:90%;
+overflow: auto;
+@media only screen and (max-width: 500px) {
+    height:80%;
+}
+`
+
+const Div = styled.div`
+display:flex;    
+justify-content: center;
+align-items: center;
+@media only screen and (max-width: 1300px) {
+    flex-direction: column;
+    width:100%;
+}
+`   
+
 const Time = styled.button`
-border: 0px;
-text-algin: center;
-font-family: 'Do Hyeon';
+background:white;
+border: 0;
+color:#58392A;
+cursor:pointer;
+font-size: 14px;
 `
+
+const DownloadedVideo = styled(ReactPlayer)`
+width: 100% !important;
+height: 90% !important;
+@media only screen and (max-width: 500px) {
+    margin-top: -5%;
+}
+`
+
+
 const VideoTimeline = (props) => {
     const data = props.data;
     const data_length = props.data.length;
@@ -66,26 +137,42 @@ const VideoTimeline = (props) => {
     }
 
     return(
-    <div>
-    <VideoBox>    
-    <ReactPlayer url={uploadedurl} height='50%' width='100%' controls={true} ref={p => {setTimeState(p);}}/>  
-    </VideoBox>   
-     {characters.map(row => {
-        return(
-            <TimeBox>
-            <tr key={row}>
-                <td key={row[1]}><Img src={row[1]}/></td>
-                <Name key={row[0]}>{row[0]}<br/><br/></Name>
-                {row[2].map(time => {
+        <Div>
+        <VideoBox>
+            <div className="title">Tagged Video</div>
+            <DownloadedVideo url={uploadedurl} controls={true} ref={p => {setTimeState(p);}}/>
+        </VideoBox>
+
+        <TimeBox>
+                <div className="title">Timeline</div>
+                <Timediv>
+                {characters.map(row => {
                     return(
-                        <td key={row[2]}>
-                        <Time onClick={() => timeState.seekTo(parseFloat(time[0]))}>{convertHMS(time[0])}</Time>
-                        -<Time onClick={() => timeState.seekTo(parseFloat(time[1]))}>{convertHMS(time[1])}</Time>
-                        <br/></td>)})}
-            </tr>
-            </TimeBox>
-        );})}
-    </div>
+                        <Box>
+                        <tr key={row}>
+                            <td key={row[1]}>
+                                <Profile>
+                                    <Img src={row[1]}/>
+                                    <Name>{row[0]}</Name>
+                                </Profile> 
+                            </td>      
+                        </tr>
+                        <tr>
+                            <td colsplan="2"><br/>{row[2].map(time => {
+                                return(  
+                                    <div>
+                                        <Time onClick={() => timeState.seekTo(parseFloat(time[0]))}>{convertHMS(time[0])}</Time>
+                                          ~ <Time onClick={() => timeState.seekTo(parseFloat(time[1]))}>{convertHMS(time[1])}</Time>
+                                    </div>
+                                )})}
+                            </td>
+
+                        </tr>
+                        </Box>
+                    );})}
+                </Timediv>
+        </TimeBox>
+    </Div>
     );
 }
 export default VideoTimeline;
