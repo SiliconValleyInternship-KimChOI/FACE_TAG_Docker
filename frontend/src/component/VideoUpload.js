@@ -108,6 +108,7 @@ const VideoUpload = () => {
             setLoading(false)
             setUploadedurl(URL.createObjectURL(files[0]))
             setControlState(true)
+            console.log(response.data);
             const tempname = JSON.stringify(response.data,['name'],0)
             const tempname2 = JSON.parse(tempname).name
             setName(tempname2)
