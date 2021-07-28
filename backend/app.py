@@ -10,6 +10,7 @@ from flask import (
 )
 import os
 from werkzeug.utils import secure_filename
+from werkzeug.wrappers import Response
 from flask_cors import CORS
 
 # celery
@@ -32,6 +33,7 @@ Upload_URL = "./input_video/"
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = Upload_URL
 video_path = "./output_video/"
+# filename = ""
 CORS(app)
 
 app.config.update(
@@ -56,15 +58,16 @@ def getMysqlConnection():
 def get_video():
     if request.method == "POST":
         # 파일이 존재하지 않을 경우
-        if "file" not in request.files:
-            flash("no file part")
-            return redirect(request.rul)
+        # if "file" not in request.files:
+        #     flash("no file part")
+        #     return redirect(request.rul)
         video_file = request.files["file"]
         # 파일 내용이 없을 경우
-        if video_file == "":
-            flash("No selected file")
-            return redirect(request.url)
+        # if video_file == "":
+        #     flash("No selected file")
+        #     return redirect(request.url)
         # 파일 안정성 확인
+        global filename
         filename = secure_filename(video_file.filename)
         path = os.path.join(Upload_URL, filename)
         # input_video 폴더가 없을 경우 폴더 생성
@@ -110,9 +113,9 @@ def insertTimeline(timeline):
 def post_video():
     if request.method == "POST":
         # 파일 이름 가져오기
-        file_list = os.listdir(app.config["UPLOAD_FOLDER"])
-        filename = "".join(file_list)
         # 영상 처리
+        data = request.get_json()
+        filename = data['name']
         audioclip = VideoFileClip("./input_video/" + filename).audio
         video = celery.send_task(
             "processing", args=[app.config["UPLOAD_FOLDER"] + filename]
@@ -126,14 +129,21 @@ def post_video():
         insertTimeline(timeline)
 
         # 소리 합치기
-        videoclip = VideoFileClip("./output_video/output/" + filename)
+        if not (os.path.exists(video_path+"result/")):
+            os.mkdir(video_path+"result/")
+
+        videoclip = VideoFileClip(video_path + filename)
         videoclip.audio = audioclip
-        videoclip.write_videofile(video_path + filename)
+        videoclip.write_videofile(video_path+"result/" + filename)
         # S3 버킷에 영상 저장
         s3 = s3_connection()
-        if not (os.path.exists(video_path)):
-            os.mkdir(video_path)
-        s3.upload_file(video_path + filename, BUCKET_NAME, filename)
+        s3.upload_file(
+            video_path+"result/"+filename,
+            BUCKET_NAME,
+            filename,
+            ExtraArgs={
+                "ContentType": 'video/mp4'
+            })
         # 영상 url
         url = BUCKET_URL + filename
         db = getMysqlConnection()
@@ -145,8 +155,6 @@ def post_video():
         cursor.execute(sql)
         result = cursor.fetchall()
 
-        # os.remove(app.config['UPLOAD_FOLDER']+filename)
-        # shutil.rmtree(video_path+'output')
         return jsonify({"url": url, "timeline": result})
 
 
