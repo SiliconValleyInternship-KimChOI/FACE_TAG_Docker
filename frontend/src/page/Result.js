@@ -35,7 +35,10 @@ const Result= (props) => {
 
     useEffect (() => {
       // video
-      axios.post('http://localhost:5000/fileDown', filename).then(response=>{
+
+      // axios.post('/fileDown', filename).then(response=>{                     // ec2
+      axios.post('http://localhost:5000/fileDown', filename).then(response=>{   // local
+
       console.log(response.data);
       setUploadedurl(response.data.url);
       setData(response.data.timeline);
