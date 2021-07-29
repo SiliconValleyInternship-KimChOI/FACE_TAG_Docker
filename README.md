@@ -64,6 +64,8 @@ $ npm audit fix
 ```
 <br/>
 
+- Set your AWS S3 account in Docker/backend/connection.py 
+<br/>
 
 ## ✏ Team Members
 Our Team Name : **Kim ChOI** <- Our last name is *Kim + Ch(oi) + O(=Oh) + I(=Lee)*
