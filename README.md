@@ -37,7 +37,7 @@ _**#FACE_TAG**는 영상 속 인물들을 태깅하고 인물들의 등장 시�
     - Middleware : Gunicorn
     - AI model : YOLO v5
     - Database : MySQL
-    - etc : Docker / Nginx / VScode / AWS / Amozon S3 / Git&GitHub
+    - etc : Docker / Nginx / VScode / AWS / Amazon S3 / Git&GitHub
 <br/>
 
 
