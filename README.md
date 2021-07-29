@@ -8,7 +8,9 @@ _**#FACE_TAG**는 영상 속 인물들을 태깅하고 인물들의 등장 시�
 
 '해리포터' 영상을 등록하면 해리포터의 주요 출연진인 'Harry', 'Ron', 'Hermione'을 태깅한 영상 결과와 해당 사람이 등장한 시간을 확인할 수 있습니다.
 
-[시연 GIF 넣을 예정]
+![upload1](https://user-images.githubusercontent.com/55133538/127518402-2c3b1b9e-eb6c-4a92-b6d5-9dd44cd704b1.gif)
+![upload2](https://user-images.githubusercontent.com/55133538/127518418-4c0638ad-313f-4312-a514-2bb0b9335907.gif)
+![timeline](https://user-images.githubusercontent.com/55133538/127518550-4a259859-e82e-4d5e-9827-a282eb3bcb01.gif)
 <br/>
 <br/>
 
@@ -20,7 +22,7 @@ _**#FACE_TAG**는 영상 속 인물들을 태깅하고 인물들의 등장 시�
 
 
 ## ✏ System Archetecture
-![Untitled](https://user-images.githubusercontent.com/71761610/127014233-ab2ecc27-7d5e-463b-a24e-b9f2fc0d0dcd.png)
+https://www.notion.so/kimchoi-facetag/FACE_TAG-7-30-6515b891ef06433d8d0fac9972927fd5#8528e9bba55743c7acc8e49020e4602c
 <br/>
 <br/>
 
