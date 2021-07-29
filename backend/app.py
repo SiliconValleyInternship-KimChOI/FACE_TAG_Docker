@@ -84,7 +84,7 @@ def insertTimeline(timeline):
     # Timeline table 전에 저장된 정보 삭제
     db = getMysqlConnection()
     cursor = db.cursor()
-    sql = """TRUNCATE TABLE timeline;"""
+    sql = """TRUNCATE timeline;"""
     cursor.execute(sql)
     key = timeline.keys()
     for i in key:
@@ -97,8 +97,8 @@ def insertTimeline(timeline):
         timeline_value = timeline[i]
         val = []
         for j in timeline_value:
-            start = strftime("%H:%M:%S", gmtime(j[0]))
-            end = strftime("%H:%M:%S", gmtime(j[1]))
+            start = j[0]
+            end = j[1]
             val.append((cid, start, end))
         print(val)
         cursor = db.cursor()
