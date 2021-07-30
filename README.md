@@ -10,6 +10,7 @@ _**#FACE_TAG**는 영상 속 인물들을 태깅하고 인물들의 등장 시�
 
 
 DEMO : https://youtu.be/bAEyQdHFb_w
+<br/>
 배포 : www.facenet.shop 
 ![upload1](https://user-images.githubusercontent.com/55133538/127518402-2c3b1b9e-eb6c-4a92-b6d5-9dd44cd704b1.gif)
 ![upload2](https://user-images.githubusercontent.com/55133538/127518418-4c0638ad-313f-4312-a514-2bb0b9335907.gif)
