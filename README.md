@@ -80,7 +80,7 @@ Our Team Name : **Kim ChOI** <- Our last name is *Kim + Ch(oi) + O(=Oh) + I(=Lee
 
 🎅MinJeong Kim - https://github.com/kimminje0ng
 
-🧑HongGi Oh - https://github.com/ohhondgi
+🧑HongGi Oh - https://github.com/ohhonggi
 
 👨‍💻DongHeon Lee - https://github.com/Dongheon97
 
