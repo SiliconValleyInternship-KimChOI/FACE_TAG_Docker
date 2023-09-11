@@ -26,7 +26,7 @@ DEMO : https://youtu.be/bAEyQdHFb_w
 
 
 ## ✏ System Archetecture
-https://www.notion.so/kimchoi-facetag/FACE_TAG-7-30-6515b891ef06433d8d0fac9972927fd5#8528e9bba55743c7acc8e49020e4602c
+![Untitled](https://user-images.githubusercontent.com/71761610/127014233-ab2ecc27-7d5e-463b-a24e-b9f2fc0d0dcd.png)
 <br/>
 <br/>
 
